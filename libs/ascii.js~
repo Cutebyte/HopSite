@@ -1,0 +1,219 @@
+
+	var frame = [[""]];
+	var img = "";
+	var mouse = {x: 0, y: 0};
+	var positions = new Array(20);
+	var refreshIntervalId;
+	var isRunning = true;
+	
+$(document).ready(function(){
+	$("article").click(function(){
+		if (isRunning) {
+			clearInterval(refreshIntervalId);
+			isRunning = false;
+		} else {
+			var refreshIntervalId = setInterval(function() {
+				render(width/8, height/10);
+			},1000/20);
+			isRunning = true;
+		}
+	});
+});
+	
+function initFrame(width, height) {
+	var arr = [];
+
+	for (var i=0;i<width;i++) {
+		arr[i] = [];
+	}
+
+	return arr;
+}
+
+	
+function drawThisFucker(width, height) {
+	$("#asciiArt pre").text("lel");
+
+   $("#asciiArt pre").mousemove(function(e) {
+   	mouse.x = e.pageX - $("#asciiArt pre").offset().left;
+   	mouse.y = e.pageY - $("#asciiArt pre").offset().top;
+	});
+	
+	//alert(width+" "+height);
+	frame = initFrame(width/8, height/10);
+	var refreshIntervalId = setInterval(function() {
+		render(width/8, height/10);
+	},1000/20);
+	isRunning = true;
+}
+
+
+function render(width, height) {
+
+	frame = fillDisRandom(width,height);
+	frame = paintAbove(loadImage(),90,width,height,Math.round((width/2)-45),1);
+	mousey(width, height);
+
+	$("#asciiArt pre").text(getText(width, height));
+}
+
+function paintAbove(img, imgwidth, width, height, x, y) {
+	var lel = frame;
+	var lock = false;
+	for(i=0; i<height; i++) {
+		lock = false;
+		for(j=0; j<width-1; j++) {
+			if(img.charAt(i*imgwidth+j) != " " && img.charAt(i*imgwidth+j) != "" && !lock) {
+				if(img.charAt(i*imgwidth+j) == "\n") {
+					lock = true;
+				} else
+					lel[(i+y)+Math.round((Math.random()-0.5)*1.1)][(j+x)+Math.round((Math.random()-0.5)*1.1)] = img.charAt(i*imgwidth+j);
+			}
+		}
+	}
+	return lel;
+}
+
+function putNewOnPositions(x, y) {
+	for(i = 0; i<19; i++) {
+		positions[i] = positions[i+1];
+	}
+	positions[19] = {x: x, y: y};
+}
+
+function mousey(width, height) {
+	//frame[Math.round(mouse.y/9.6)][Math.round(mouse.x/8)-2] = " ";
+	//frame[Math.round(mouse.y/9.6)][Math.round(mouse.x/8)-1] = " ";
+	//frame[Math.round(mouse.y/9.6)][Math.round(mouse.x/8)] = " ";
+	//frame[Math.round(mouse.y/9.6)-1][Math.round(mouse.x/8)] = " ";
+	//frame[Math.round(mouse.y/9.6)+1][Math.round(mouse.x/8)] = " ";
+	putNewOnPositions(Math.round(mouse.x/8), Math.round(mouse.y/9.6));
+	for(i = 0; i<20; i++) {
+		if(i>6) {
+		kill(positions[i].y, positions[i].x-2, width, height, 20-i);
+		kill(positions[i].y, positions[i].x-1, width, height, 20-i);
+		kill(positions[i].y, positions[i].x, width, height, 20-i);
+		kill(positions[i].y-1, positions[i].x-1, width, height, 20-i);
+		kill(positions[i].y+1, positions[i].x-1, width, height, 20-i);
+		} else {	
+			kill(positions[i].y, positions[i].x-1, width, height, 20-i);
+		}
+	}
+	//kill(Math.round(mouse.y/9.6), Math.round(mouse.x/8)-2, width, height);
+	//kill(Math.round(mouse.y/9.6), Math.round(mouse.x/8)-1, width, height);
+	//kill(Math.round(mouse.y/9.6), Math.round(mouse.x/8), width, height);
+	//kill(Math.round(mouse.y/9.6)-1, Math.round(mouse.x/8)-1, width, height);
+	//kill(Math.round(mouse.y/9.6)+1, Math.round(mouse.x/8)-1, width, height);
+}
+
+function kill(y, x, width, height) {
+	if( x >= 0 && y >= 0 && x <= width && y <= height ) {
+		frame[y][x] = " ";
+	}
+}
+
+function kill(y, x, width, height, i) {
+	if( x >= 0 && y >= 0 && x <= width && y <= height ) {
+		frame[y][x] = getShade((i/20)*10);
+	}
+}
+
+function getShade(x) {
+	var shade = "@X80OCxoc,.";
+	if(x > 0 && x < 10) {
+		return shade.charAt(x);
+	}
+	return " ";
+}
+
+function randomizer()
+{
+    var text = "";
+    //var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\\/)(][}{.,;'\"";
+    var possible = "                  \\/)(][}{.,;'\"";
+
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function fillDis(character, width, height) {
+	var lel = [[""]];
+	for(i=0; i<height; i++) {
+		if(i>0)
+			lel += "\n";
+		for(j=0; j<width-1; j++) {
+			lel += character;
+		}
+	}
+	return lel;
+}
+
+function fillDisRandom(width, height) {
+	var lel = initFrame(width, height);
+	for(i=0; i<height; i++) {
+		if(i>0)
+			lel[i][j] = "\n";
+		for(j=0; j<width-1; j++) {
+			lel[i][j] = randomizer();
+		}
+	}
+	return lel;
+}
+
+function getText(width, height) {
+	var lel = "";
+	for(i=0; i<height; i++) {
+		for(j=0; j<width-1; j++) {
+			lel += frame[i][j];
+		}
+		lel += "\n";
+	}
+	return lel;
+}
+
+function loadImage() {
+	$.ajax({
+		url : "./images/lel.txt",
+		success : function (data) {
+			img = data;
+		}
+	});
+	return img;
+}
+
+function getImage() {
+	var img = [];
+img.push(
+"                                                                                \n",
+"                                                                                \n",
+"         _,                                                          _,         \n",
+"        =QQg,                                                      _yQQ;        \n",
+"        ]QQQQa                                                    jQQQQ[        \n",
+"        )Wk?QQm,                                                _mQQ?jQ(        \n",
+"        -Qk \"$QQw.                                            .jQQ@' dQ`        \n",
+"         QW   ?QWQc                                          sQWW!   QW         \n",
+"         $Q    -?QWma                                     .amQW?`    QD         \n",
+"         3Q.     -?QWQa,                                _aQWW?`     .Qk         \n",
+"         jQ;  <     \"9QQma,                          _amQQT\"     /  :Qf         \n",
+"         jQ`  d;      -?9QQmya,,                __wwmQWV!`      =h  :Qf         \n",
+"         ]Q  .QL          \"?9WQQQgywwaaaaaawwwgQQQ@T?\"          jQ,  Qf         \n",
+"         ]Q  ]Dk  _,          -\"\"??9TVVUUVVTT??\"\"`          _;  j$[  Qf         \n", 
+"         jW  m{k  jk                                        jL  dem  QL         \n",
+"         dD ]@)E  mQ                                        Qm  m($c $k         \n",
+"         Wf d[]f ]WQ;         .                  .         :QQc j[]h ]Q         \n",
+"         Q(<W`jf mDQ(     _yQQQQwa,          _awmQQQw,     ]Q$m ]L-Q/]Q         \n",
+"        =Q`mf m(j@)W(    wQQT???9WWmc      ayQWT???9QQw    )W($L)m ]m-Q;        \n",
+"        ]EjD :Q<W']W(  .mQY`      \"9QQc  aQWP\"      -4Wm,  )W()W/Q. WL4[        \n",
+"        dLQ' j#mf ]W( _m@'          \"4QmmQP'          -Qm, )W[ ]mW[ )QJh        \n",
+"       _Qmf  mQF  ]W _QD`    _wwgmmgwwmQQmwwgmmmwa,    -$m, Q[  4Qm  ]mW,       \n",
+"       jQE  ]QP   jD<QP    smQQWWQQQQQQQQQQQQQQWQQQQc    4Qc$L   4Qc  4QL       \n",
+"       QD`  mF    mQQ!    j@T\"-   -\"9QQQQQQP\"-   -\"9$L    ?Qmm    4m  -$Q       \n", 
+"      jB'  <P    ]WV'    J!          -$QQD'          ?t    -9Qc    4c  -Qc      \n",
+"     .W'   7     \"`     .`             $@             -.     -^     {   +Q.     \n",
+"     j'                                +'                                )L     \n",
+"    _(                                                                    ),    \n",
+"    >                                                                      <    \n",
+"   -                                                                        `   ");
+	return img.join("");
+}

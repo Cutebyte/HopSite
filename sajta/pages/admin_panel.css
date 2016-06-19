@@ -1,0 +1,15 @@
+#descriptionInput {
+	width: 30%;
+	height: 300px;
+}
+
+#contentInput {
+	width: 60%;
+	height: 300px;
+}
+
+#descriptionImg {
+	width: 90%;
+	height: 150px;
+	margin-bottom: 25px;
+}

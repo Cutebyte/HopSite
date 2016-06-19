@@ -1,0 +1,132 @@
+header, section, footer, nav, article, main {
+	display: block;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	
+	/*background-color: rgb(130,0,0);*/
+	background-image: url("../images/bglop.png");
+	color: rgb(200,200,200);
+	/* overflow-x:hidden; */
+}
+
+main {
+	position: relative;
+	height: 100%;
+}
+
+
+header {
+	height: 64px;
+	margin-bottom: 9px;
+	box-shadow: 0px 0px 3px black;
+	background-color: rgba(0,0,0,0.2);
+}
+
+header span {
+	font-family: Amigaish;
+	font-size: 34px;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 64px;
+	text-shadow: 0px 2px 5px #000000;
+}
+
+@font-face {
+ font-family: Amigaish;
+ src: url("../fonts/topazpl.eot"); /* EOT file for IE */
+}
+@font-face {
+ font-family: Amigaish;
+ src: url("../fonts/foncia.ttf"); /* TTF file for CSS3 browsers */
+}
+
+nav {
+	font-family: Amigaish;
+	background-color: rgb(30,30,30);
+	margin-bottom: 9px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	position: relative;
+	box-shadow: inset 0px 0px 3px black;
+}
+
+nav #upperNav {
+	display: block;
+	height: 48px;
+}
+
+#wat {
+	display: block;
+	/*background-color: rgb(255,255,0);*/
+}
+
+nav a {	
+   opacity: 0;
+   border-style: none;
+}
+
+a:focus {
+    outline: 0px solid rgba(155,155,155,10);
+}
+
+h1 {
+	font-family: Amigaish;
+	text-shadow: 0px 2px 5px #000000;
+}
+
+.leftNav, .rightNav, .centerNav {
+	display: inline-block;
+	width: 190px;
+	height: 38px;
+	line-height: 38px;
+	font-size: 24px;
+	box-shadow: 0px 0px 3px black;
+}
+
+.leftNav {
+	font-size: 24px;
+	color: rgb(120,120,120);
+}
+
+.rightNav {
+	font-size: 24px;
+	color: rgb(120,120,120);
+}
+
+.centerNav {
+	color: rgb(225,225,225);
+}
+
+article {
+	background-color: rgb(30,30,30);
+	box-shadow: 0px 0px 3px black;
+	width: 1000px;
+	opacity: 0;
+}
+
+footer {
+	height: 48px;
+	margin-top:-48px;
+	background: rgb(30,30,30);
+}
+
+#admin_panel_clicker {
+	text-align: center;
+	height: 48px;
+	position: fixed;
+	bottom: -24px;
+	left: 0;
+	background-color: rgba(0,0,0,0.4);
+}
+
+#admin_panel_clicker a {
+	margin-top: 8px;
+	display: block;
+}

@@ -1,0 +1,11 @@
+#main {
+	padding: 10px;
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+#article {
+	width: 100px;
+	height: 100px;
+	background-color: #333;
+}

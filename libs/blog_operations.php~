@@ -1,0 +1,5 @@
+<?php
+    header("refresh:5; url=index.php"); 
+?>
+
+Hello there!
